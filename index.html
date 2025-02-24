@@ -3,34 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What's My IP - Instantly Find Your IP Address</title>
-    <meta name="description" content="Find your public IP address instantly along with your approximate location. No data is stored.">
-    <meta name="keywords" content="What's My IP, IP lookup, Find IP, Public IP Address, IP location">
+    <meta name="description" content="Find your public IP address instantly. View your approximate location on a map. Click to copy your IP with one tap.">
+    <meta name="keywords" content="What is my IP, find IP address, check IP, public IP, IP lookup">
+    <meta name="author" content="TechFixPro">
     <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph (Facebook & LinkedIn) -->
+    <meta property="og:title" content="What's My IP - Instantly Find Your IP Address">
+    <meta property="og:description" content="Easily check your public IP address and view your approximate location on a map. Click to copy your IP instantly.">
+    <meta property="og:url" content="https://whatsmyip.techfixpro.net>
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card (X) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What's My IP - Instantly Find Your IP Address">
+    <meta name="twitter:description" content="Easily check your public IP address and view your approximate location on a map. Click to copy your IP instantly.">
+    
+    <!-- Canonical URL (Avoid Duplicate Content Issues) -->
+    <link rel="canonical" href="https://whatsmyip.techfixpro.net">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://techfixpro.net/icon.png" type="image/x-icon">
+
+    <title>What's My IP - Instantly Find Your IP Address</title>
 
     <!-- Google Ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4778277727361005" crossorigin="anonymous"></script>
 
-    <!-- Open Graph for Social Media -->
-    <meta property="og:title" content="What's My IP - Instantly Find Your Public IP Address">
-    <meta property="og:description" content="Find your public IP address and approximate location in seconds.">
-    <meta property="og:url" content="https://whatsmyip.techfixpro.net">
-    <meta property="og:type" content="website">
+    <!-- Leaflet for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <!-- Schema.org JSON-LD -->
+    <!-- Structured Data (Schema.org) for Search Engines -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "What's My IP",
-        "description": "Find your public IP address instantly.",
-        "url": "https://whatsmyip.techfixpro.net"
+        "description": "Find your public IP address instantly and view your approximate location on a map.",
+        "url": "https://whatsmyip.techfixpro.net",
+        "image": "https://techfixpro.net/icon.png",
+        "author": {
+            "@type": "Organization",
+            "name": "TechFixPro"
+        }
     }
     </script>
-
-    <!-- Leaflet for Maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <!-- Custom Styles -->
     <style>
@@ -71,21 +89,31 @@
             font-size: 26px;
             margin-bottom: 10px;
         }
-        .ip-box {
+        .ip-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
             font-size: 22px;
             font-weight: bold;
             background: #eee;
             padding: 14px;
             border-radius: 8px;
-            display: inline-block;
             cursor: pointer;
             transition: background 0.3s ease;
             width: 100%;
             max-width: 350px;
             margin: 10px auto;
+            position: relative;
         }
-        .ip-box:hover {
+        .ip-container:hover {
             background: #ddd;
+        }
+        .checkmark {
+            font-size: 18px;
+            color: green;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
         .small-text {
             font-size: 14px;
@@ -113,7 +141,7 @@
             .container {
                 max-width: 650px;
             }
-            .ip-box {
+            .ip-container {
                 font-size: 24px;
                 padding: 16px;
             }
@@ -137,7 +165,10 @@
     <div class="container">
         <h1>What's My IP?</h1>
         <p>Your public IP address:</p>
-        <div class="ip-box" id="ip">Loading...</div>
+        <div class="ip-container" id="ip-container">
+            <span id="ip">Loading...</span>
+            <span class="checkmark" id="checkmark">✅</span>
+        </div>
         <p class="small-text">Click to copy</p>
 
         <h2>Approximate Location</h2>
@@ -162,22 +193,16 @@
             try {
                 const response = await fetch("https://ipapi.co/json/");
                 const data = await response.json();
-                const ipBox = document.getElementById("ip");
-                ipBox.innerText = data.ip;
-
-                // Enable Copying on Click
-                ipBox.addEventListener("click", () => {
+                document.getElementById("ip").innerText = data.ip;
+                const checkmark = document.getElementById("checkmark");
+                document.getElementById("ip-container").addEventListener("click", () => {
                     navigator.clipboard.writeText(data.ip);
-                    ipBox.style.background = "#c8e6c9";  // Light green feedback
-                    setTimeout(() => ipBox.style.background = "#eee", 500);
+                    checkmark.style.opacity = "1";
+                    setTimeout(() => { checkmark.style.opacity = "0"; }, 1500);
                 });
-
-                // Show Map
                 const map = L.map('map').setView([data.latitude, data.longitude], 10);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-                L.marker([data.latitude, data.longitude]).addTo(map)
-                    .bindPopup(`You are near ${data.city}, ${data.region}`)
-                    .openPopup();
+                L.marker([data.latitude, data.longitude]).addTo(map).bindPopup(`You are near ${data.city}, ${data.region}`).openPopup();
             } catch (error) {
                 document.getElementById("ip").innerText = "Unable to retrieve IP";
             }
