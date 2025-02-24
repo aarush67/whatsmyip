@@ -8,14 +8,14 @@
     <meta name="keywords" content="What's My IP, IP lookup, Find IP, Public IP Address, IP location">
     <meta name="robots" content="index, follow">
 
+    <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4778277727361005" crossorigin="anonymous"></script>
+
     <!-- Open Graph for Social Media -->
     <meta property="og:title" content="What's My IP - Instantly Find Your Public IP Address">
     <meta property="og:description" content="Find your public IP address and approximate location in seconds.">
     <meta property="og:url" content="https://whatsmyip.techfixpro.net">
     <meta property="og:type" content="website">
-
-        <!-- Google Ads -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4778277727361005" crossorigin="anonymous"></script>
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
@@ -55,29 +55,34 @@
             align-items: center;
             height: 100vh;
             text-align: center;
+            padding: 20px;
         }
         .container {
-            max-width: 500px;
+            max-width: 600px;
             background: var(--card-bg);
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 12px var(--shadow);
             animation: fadeIn 0.8s ease-in-out;
+            width: 100%;
         }
         h1 {
             color: var(--primary-color);
-            font-size: 24px;
+            font-size: 26px;
             margin-bottom: 10px;
         }
         .ip-box {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             background: #eee;
-            padding: 12px;
-            border-radius: 6px;
+            padding: 14px;
+            border-radius: 8px;
             display: inline-block;
             cursor: pointer;
             transition: background 0.3s ease;
+            width: 100%;
+            max-width: 350px;
+            margin: 10px auto;
         }
         .ip-box:hover {
             background: #ddd;
@@ -87,11 +92,34 @@
             color: #666;
         }
         #map {
-            height: 250px;
+            height: 300px;
             width: 100%;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-top: 15px;
             animation: fadeInUp 0.6s ease-in-out;
+        }
+        .ads {
+            margin-top: 20px;
+            min-height: 100px;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            body {
+                padding: 40px;
+                height: auto;
+            }
+            .container {
+                max-width: 650px;
+            }
+            .ip-box {
+                font-size: 24px;
+                padding: 16px;
+            }
+            #map {
+                height: 350px;
+            }
         }
 
         /* Animations */
@@ -114,6 +142,19 @@
 
         <h2>Approximate Location</h2>
         <div id="map"></div>
+
+        <!-- Ad Space -->
+        <div class="ads">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-4778277727361005"
+                data-ad-slot="1234567890"
+                data-ad-format="auto"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 
     <script>
