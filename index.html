@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's My IP - Instantly Find Your Public IP Address</title>
+    <meta name="description" content="Find your public IP address and approximate location instantly. Get details like city, region, country, and ISP without storing any data.">
+    <meta name="keywords" content="What's My IP, Find IP, Public IP Address, IP Lookup">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph for Social Media -->
+    <meta property="og:title" content="What's My IP - Instantly Find Your IP Address">
+    <meta property="og:description" content="Find your public IP address and approximate location instantly.">
+    <meta property="og:url" content="https://whatsmyip.techfixpro.net">
+    <meta property="og:type" content="website">
+
+    <!-- Schema.org JSON-LD Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "What's My IP",
+        "description": "Find your public IP address instantly.",
+        "url": "https://whatsmyip.techfixpro.net"
+    }
+    </script>
+
+    <!-- Leaflet for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --background: #f9f9f9;
+            --text-color: #333;
+            --card-bg: #fff;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--background);
+            color: var(--text-color);
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+        h1 { color: var(--primary-color); }
+        .ip-box {
+            font-size: 24px;
+            font-weight: bold;
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .ip-box:hover { background: #ddd; }
+        #map {
+            height: 300px;
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        .ads { 
+            margin-top: 20px; 
+            min-height: 100px; 
+            background: #ddd; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>What's My IP?</h1>
+        <p>Your public IP address:</p>
+        <div class="ip-box" id="ip">Loading...</div>
+        <p>(Click to Copy)</p>
+
+        <h2>Approximate Location</h2>
+        <div id="map"></div>
+
+        <!-- Ad Space (Replace with AdSense Code) -->
+        <div class="ads">
+            <p>Ad Placeholder</p>
+        </div>
+    </div>
+
+    <script>
+        async function getIP() {
+            try {
+                const response = await fetch("https://ipapi.co/json/");
+                const data = await response.json();
+                document.getElementById("ip").innerText = data.ip;
+
+                // Enable Copying on Click
+                document.getElementById("ip").addEventListener("click", () => {
+                    navigator.clipboard.writeText(data.ip);
+                    alert("IP copied to clipboard!");
+                });
+
+                // Show Map
+                const map = L.map('map').setView([data.latitude, data.longitude], 10);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+                L.marker([data.latitude, data.longitude]).addTo(map)
+                    .bindPopup(`You are near ${data.city}, ${data.region}`)
+                    .openPopup();
+            } catch (error) {
+                document.getElementById("ip").innerText = "Unable to retrieve IP";
+            }
+        }
+        getIP();
+    </script>
+</body>
+</html>
