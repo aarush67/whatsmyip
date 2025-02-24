@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Find your public IP address instantly. View your approximate location on a map. Click to copy your IP with one tap.">
-    <meta name="keywords" content="What is my IP, find IP address, check IP, public IP, IP lookup">
+    <meta name="description" content="Find your public IP address instantly with one click. View your approximate location on a map. Click to copy your IP easily.">
+    <meta name="keywords" content="What is my IP, find IP address, check my IP, public IP lookup, IP tracker">
     <meta name="author" content="TechFixPro">
     <meta name="robots" content="index, follow">
     
-    <!-- Open Graph (Facebook & LinkedIn) -->
+    <!-- Open Graph for Facebook, LinkedIn -->
     <meta property="og:title" content="What's My IP - Instantly Find Your IP Address">
     <meta property="og:description" content="Easily check your public IP address and view your approximate location on a map. Click to copy your IP instantly.">
-    <meta property="og:url" content="https://whatsmyip.techfixpro.net>
+    <meta property="og:url" content="https://whatsmyip.techfixpro.net">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="https://techfixpro.net/icon.png">
     
     <!-- Twitter Card (X) -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="What's My IP - Instantly Find Your IP Address">
     <meta name="twitter:description" content="Easily check your public IP address and view your approximate location on a map. Click to copy your IP instantly.">
+    <meta name="twitter:image" content="https://techfixpro.net/icon.png">
     
-    <!-- Canonical URL (Avoid Duplicate Content Issues) -->
+    <!-- Canonical URL -->
     <link rel="canonical" href="https://whatsmyip.techfixpro.net">
 
     <!-- Favicon -->
@@ -31,10 +33,10 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4778277727361005" crossorigin="anonymous"></script>
 
     <!-- Leaflet for Maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <!-- Structured Data (Schema.org) for Search Engines -->
+    <!-- Structured Data (Schema.org) -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -46,6 +48,23 @@
         "author": {
             "@type": "Organization",
             "name": "TechFixPro"
+        },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://techfixpro.net"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "What's My IP",
+                    "item": "https://whatsmyip.techfixpro.net"
+                }
+            ]
         }
     }
     </script>
@@ -90,10 +109,6 @@
             margin-bottom: 10px;
         }
         .ip-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
             font-size: 22px;
             font-weight: bold;
             background: #eee;
@@ -101,10 +116,10 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background 0.3s ease;
-            width: 100%;
-            max-width: 350px;
             margin: 10px auto;
-            position: relative;
+            width: max-content;
+            display: flex;
+            align-items: center;
         }
         .ip-container:hover {
             background: #ddd;
@@ -131,26 +146,6 @@
             min-height: 100px;
             text-align: center;
         }
-
-        /* Responsive Design */
-        @media (min-width: 768px) {
-            body {
-                padding: 40px;
-                height: auto;
-            }
-            .container {
-                max-width: 650px;
-            }
-            .ip-container {
-                font-size: 24px;
-                padding: 16px;
-            }
-            #map {
-                height: 350px;
-            }
-        }
-
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -174,7 +169,6 @@
         <h2>Approximate Location</h2>
         <div id="map"></div>
 
-        <!-- Ad Space -->
         <div class="ads">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             <ins class="adsbygoogle"
@@ -182,9 +176,7 @@
                 data-ad-client="ca-pub-4778277727361005"
                 data-ad-slot="1234567890"
                 data-ad-format="auto"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
 
@@ -194,11 +186,10 @@
                 const response = await fetch("https://ipapi.co/json/");
                 const data = await response.json();
                 document.getElementById("ip").innerText = data.ip;
-                const checkmark = document.getElementById("checkmark");
                 document.getElementById("ip-container").addEventListener("click", () => {
                     navigator.clipboard.writeText(data.ip);
-                    checkmark.style.opacity = "1";
-                    setTimeout(() => { checkmark.style.opacity = "0"; }, 1500);
+                    document.getElementById("checkmark").style.opacity = "1";
+                    setTimeout(() => document.getElementById("checkmark").style.opacity = "0", 1500);
                 });
                 const map = L.map('map').setView([data.latitude, data.longitude], 10);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
