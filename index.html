@@ -4,22 +4,22 @@
     <!-- Standard Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Instantly check your public IP address, IPv6, ISP, and location on a sleek, interactive map.">
-    <meta name="keywords" content="What is my IP, find IP address, check my IP, public IP lookup, IP location, IPv6, ISP">
+    <meta name="description" content=" Instantly check your public IP, IPv6, ISP, ASN, hostname, and location on an interactive map.">
+    <meta name="keywords" content="What is my IP, find IP address, check my IP, public IP lookup, IP location, IPv6, ISP, ASN, hostname">
     <meta name="author" content="TechFixPro">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph for Social Media -->
-    <meta property="og:title" content="What's My IP? - IP, IPv6, ISP & Location">
-    <meta property="og:description" content="Get your public IP address, IPv6, ISP, and location with a sleek, interactive map.">
+    <meta property="og:title" content="What's My IP? - Ultimate IP & Network Tool">
+    <meta property="og:description" content="Get your IP, IPv6, ISP, ASN, hostname, and location with a sleek, interactive map.">
     <meta property="og:url" content="https://whatsmyip.techfixpro.net">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://techfixpro.net/icon.png">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="What's My IP? - IP, IPv6, ISP & Location">
-    <meta name="twitter:description" content="Get your public IP address, IPv6, ISP, and location with a sleek, interactive map.">
+    <meta name="twitter:title" content="What's My IP? - Ultimate IP & Network Tool">
+    <meta name="twitter:description" content="Get your IP, IPv6, ISP, ASN, hostname, and location with a sleek, interactive map.">
     <meta name="twitter:image" content="https://techfixpro.net/icon.png">
     
     <!-- Canonical URL -->
@@ -29,7 +29,7 @@
     <link rel="icon" href="https://techfixpro.net/icon.png" type="image/x-icon">
 
     <!-- Page Title -->
-    <title>What's My IP? - IP, IPv6, ISP & Location</title>
+    <title>What's My IP? - Ultimate IP & Network Tool</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -53,7 +53,7 @@
     <!-- Custom Styles -->
     <style>
         :root {
-            --primary-color: #3498db;
+            --primary-color: linear-gradient(135deg, #3498db, #2ecc71);
             --background: #f0f2f5;
             --text-color: #333;
             --card-bg: rgba(255, 255, 255, 0.9);
@@ -84,35 +84,41 @@
             color: var(--dark-text);
         }
         .container {
-            max-width: 700px;
+            max-width: 750px;
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 6px 20px var(--shadow);
+            backdrop-filter: blur(12px);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px var(--shadow);
             animation: fadeIn 0.8s ease-in-out;
             width: 100%;
             position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px var(--shadow);
         }
         .dark .container {
             background: var(--dark-card);
         }
         h1 {
-            color: var(--primary-color);
-            font-size: 36px;
+            color: #3498db;
+            font-size: 38px;
             font-weight: 700;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px var(--shadow);
         }
         .ip-container {
             background: #eee;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin: 15px auto;
-            font-size: 26px;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px auto;
+            font-size: 28px;
             font-weight: bold;
             display: flex;
             flex-wrap: wrap;
-            gap: 25px;
+            gap: 30px;
             justify-content: center;
             align-items: center;
         }
@@ -122,8 +128,12 @@
         .ip-info {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             position: relative;
+        }
+        .ip-info span[data-tooltip] {
+            position: relative;
+            cursor: help;
         }
         .ip-info span[data-tooltip]:hover:after {
             content: attr(data-tooltip);
@@ -133,50 +143,55 @@
             transform: translateX(-50%);
             background: #333;
             color: #fff;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
             white-space: nowrap;
             z-index: 10;
+            animation: tooltipFade 0.2s ease-in-out;
         }
         .dark .ip-info span[data-tooltip]:hover:after {
             background: #555;
         }
-        #copy-btn, #refresh-btn {
+        .buttons {
+            display: flex;
+            gap: 15px;
+        }
+        #copy-btn, #copy-all-btn, #refresh-btn {
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.3s ease, transform 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        #copy-btn:hover:not(:disabled), #refresh-btn:hover:not(:disabled) {
-            background: #2980b9;
+        #copy-btn:hover:not(:disabled), #copy-all-btn:hover:not(:disabled), #refresh-btn:hover:not(:disabled) {
             transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
         }
-        #copy-btn:disabled, #refresh-btn:disabled {
+        #copy-btn:disabled, #copy-all-btn:disabled, #refresh-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
         }
         #copy-feedback {
-            color: green;
+            color: #2ecc71;
             font-size: 14px;
-            margin-top: 8px;
+            margin-top: 10px;
             display: none;
             transition: opacity 0.3s ease;
         }
         #map {
-            height: 250px;
+            height: 300px;
             width: 100%;
             border-radius: 12px;
-            margin-top: 20px;
-            box-shadow: 0 4px 10px var(--shadow);
+            margin-top: 25px;
+            box-shadow: 0 4px 15px var(--shadow);
             animation: mapFadeIn 1s ease-in-out;
         }
         footer {
-            margin-top: 25px;
+            margin-top: 30px;
         }
         .small-text {
             font-size: 14px;
@@ -187,7 +202,7 @@
             color: #b0b8cc;
         }
         a {
-            color: var(--primary-color);
+            color: #3498db;
             text-decoration: none;
         }
         a:hover {
@@ -195,15 +210,16 @@
         }
         .spinner {
             display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 3px solid #ddd;
-            border-top: 3px solid var(--primary-color);
+            width: 28px;
+            height: 28px;
+            border: 4px solid #ddd;
+            border-top: 4px solid #3498db;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 1s ease-in-out infinite;
         }
         .dark .spinner {
             border-color: #555;
+            border-top-color: #3498db;
         }
         .mode-toggle {
             position: absolute;
@@ -211,23 +227,33 @@
             right: 15px;
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 22px;
             cursor: pointer;
             color: var(--text-color);
+            transition: transform 0.2s ease;
+        }
+        .mode-toggle:hover {
+            transform: rotate(15deg);
         }
         .dark .mode-toggle {
             color: var(--dark-text);
         }
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { transform: rotate(360deg); opacity: 1; }
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-15px); }
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes mapFadeIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes tooltipFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         @media (max-width: 600px) {
             .container {
@@ -235,19 +261,23 @@
                 margin: 10px;
             }
             h1 {
-                font-size: 28px;
+                font-size: 30px;
             }
             .ip-container {
-                font-size: 22px;
+                font-size: 24px;
                 gap: 20px;
-                padding: 12px 15px;
+                padding: 15px;
             }
-            #copy-btn, #refresh-btn {
-                padding: 12px 24px;
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            #copy-btn, #copy-all-btn, #refresh-btn {
+                padding: 12px 20px;
                 font-size: 15px;
             }
             #map {
-                height: 180px;
+                height: 200px;
             }
             .small-text {
                 font-size: 12px;
@@ -264,17 +294,20 @@
                 <span id="ip" data-tooltip="Your public IPv4 address"><span class="spinner"></span></span>
                 <span id="ipv6" class="small-text" data-tooltip="Your IPv6 address (if available)"></span>
                 <span id="isp" class="small-text" data-tooltip="Your Internet Service Provider"></span>
-                <span id="country" class="small-text" data-tooltip="Your country based on IP"></span>
+                <span id="asn" class="small-text" data-tooltip="Autonomous System Number"></span>
+                <span id="hostname" class="small-text" data-tooltip="Your device's hostname (if available)"></span>
+                <span id="coords" class="small-text" data-tooltip="Latitude & Longitude"></span>
             </div>
-            <div>
-                <button id="copy-btn" disabled>Copy IP Address</button>
+            <div class="buttons">
+                <button id="copy-btn" disabled>Copy IPv4</button>
+                <button id="copy-all-btn" disabled>Copy All</button>
                 <button id="refresh-btn">Refresh</button>
             </div>
         </div>
         <span id="copy-feedback" class="small-text">Copied!</span>
         <div id="map"></div>
         <footer>
-            <p class="small-text">Your IP address identifies your device online. Use this tool to troubleshoot or understand your connectivity.</p>
+            <p class="small-text">Your IP address reveals your online identity. Use this tool to diagnose networks or explore connectivity details.</p>
             <p class="small-text">No data stored. Powered by ipapi.co and MapLibre with OpenStreetMap. <a href="https://techfixpro.net/privacy-policy.html">Privacy Policy</a></p>
         </footer>
     </div>
@@ -287,22 +320,30 @@
                 const ipElement = document.getElementById("ip");
                 const ipv6Element = document.getElementById("ipv6");
                 const ispElement = document.getElementById("isp");
-                const countryElement = document.getElementById("country");
+                const asnElement = document.getElementById("asn");
+                const hostnameElement = document.getElementById("hostname");
+                const coordsElement = document.getElementById("coords");
                 const copyBtn = document.getElementById("copy-btn");
-                
+                const copyAllBtn = document.getElementById("copy-all-btn");
+
                 ipElement.innerHTML = data.ip || "Not available";
                 ipv6Element.innerHTML = data.ipv6 || "IPv6 not detected";
                 ispElement.innerHTML = data.org || "Unknown ISP";
-                countryElement.innerHTML = data.country_name || "Unknown country";
-                
+                asnElement.innerHTML = data.asn || "Unknown ASN";
+                hostnameElement.innerHTML = data.hostname || "Hostname not available";
+                coordsElement.innerHTML = `${data.latitude}, ${data.longitude}`;
+
                 copyBtn.disabled = false;
                 copyBtn.onclick = () => {
                     navigator.clipboard.writeText(data.ip);
-                    const feedback = document.getElementById("copy-feedback");
-                    feedback.style.display = "inline";
-                    feedback.style.opacity = "1";
-                    setTimeout(() => feedback.style.opacity = "0", 1500);
-                    setTimeout(() => feedback.style.display = "none", 1800);
+                    showFeedback("IPv4 Copied!");
+                };
+
+                const allData = `IPv4: ${data.ip || 'N/A'}\nIPv6: ${data.ipv6 || 'N/A'}\nISP: ${data.org || 'N/A'}\nASN: ${data.asn || 'N/A'}\nHostname: ${data.hostname || 'N/A'}\nCoords: ${data.latitude}, ${data.longitude}`;
+                copyAllBtn.disabled = false;
+                copyAllBtn.onclick = () => {
+                    navigator.clipboard.writeText(allData);
+                    showFeedback("All Data Copied!");
                 };
 
                 const map = new maplibregl.Map({
@@ -329,31 +370,62 @@
                     zoom: 10
                 });
                 map.addControl(new maplibregl.NavigationControl());
-                new maplibregl.Marker({ color: '#3498db' })
+                const marker = new maplibregl.Marker({ color: '#3498db' })
                     .setLngLat([data.longitude, data.latitude])
                     .setPopup(new maplibregl.Popup().setText(`Near ${data.city}, ${data.region}`))
                     .addTo(map)
                     .togglePopup();
+                map.on('load', () => {
+                    map.addSource('coords-overlay', {
+                        'type': 'geojson',
+                        'data': {
+                            'type': 'Feature',
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': [data.longitude, data.latitude]
+                            }
+                        }
+                    });
+                    map.addLayer({
+                        'id': 'coords-circle',
+                        'type': 'circle',
+                        'source': 'coords-overlay',
+                        'paint': {
+                            'circle-radius': 10,
+                            'circle-color': '#3498db',
+                            'circle-opacity': 0.3
+                        }
+                    });
+                });
             } catch (error) {
                 const ipElement = document.getElementById("ip");
-                ipElement.innerHTML = "Unable to retrieve IP";
+                ipElement.innerHTML = `Error: ${error.message || "Check your connection"}`;
                 document.getElementById("copy-btn").disabled = true;
+                document.getElementById("copy-all-btn").disabled = true;
             }
         }
 
-        // Initial fetch
+        function showFeedback(message) {
+            const feedback = document.getElementById("copy-feedback");
+            feedback.textContent = message;
+            feedback.style.display = "inline";
+            feedback.style.opacity = "1";
+            setTimeout(() => feedback.style.opacity = "0", 1500);
+            setTimeout(() => feedback.style.display = "none", 1800);
+        }
+
         fetchIP();
 
-        // Refresh button
         document.getElementById("refresh-btn").addEventListener("click", () => {
             document.getElementById("ip").innerHTML = '<span class="spinner"></span>';
             document.getElementById("ipv6").innerHTML = "";
             document.getElementById("isp").innerHTML = "";
-            document.getElementById("country").innerHTML = "";
+            document.getElementById("asn").innerHTML = "";
+            document.getElementById("hostname").innerHTML = "";
+            document.getElementById("coords").innerHTML = "";
             fetchIP();
         });
 
-        // Dark mode toggle
         document.querySelector(".mode-toggle").addEventListener("click", () => {
             document.body.classList.toggle("dark");
             const toggle = document.querySelector(".mode-toggle");
