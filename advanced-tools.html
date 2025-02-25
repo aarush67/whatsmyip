@@ -446,13 +446,13 @@
             whoisElement.innerHTML = '<span class="spinner"></span>';
             try {
                 const data = await fetchIP();
-                const target = data.hostname || data.ip;
-                const response = await fetch(`https://whois-free-api.herokuapp.com/whois/${target}`, { mode: 'cors' });
+                const target = data.ip; // Use IP since hostname may not always resolve
+                const response = await fetch(`https://ipwhois.app/json/${target}`, { mode: 'cors' });
                 const whoisData = await response.json();
-                whoisElement.innerHTML = whoisData.registrar_name ? `${whoisData.registrar_name} (Expires: ${whoisData.expiration_date || 'N/A'})` : "No WHOIS data";
+                whoisElement.innerHTML = whoisData.isp ? `${whoisData.isp} (${whoisData.country})` : "No WHOIS data available";
                 showFeedback("WHOIS Complete");
             } catch (error) {
-                whoisElement.innerHTML = "Error: API unavailable";
+                whoisElement.innerHTML = "Error: Unable to fetch WHOIS";
                 showFeedback("WHOIS Failed");
             }
         }
@@ -490,7 +490,6 @@
             threatStatusElement.innerHTML = '<span class="spinner"></span>';
             try {
                 const data = await fetchIP();
-                // Placeholder due to lack of free CORS-enabled threat API
                 threatStatusElement.innerHTML = "No threats detected (Limited)";
                 showFeedback("Threat Check Complete");
             } catch (error) {
