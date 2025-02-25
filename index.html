@@ -4,22 +4,22 @@
     <!-- Standard Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The ultimate IP finder with tools: IP, IPv6, ISP, ASN, hostname, network, VPN, DNS, ports, threats, traceroute, WHOIS, speed test, and map.">
-    <meta name="keywords" content="What is my IP, find IP address, check my IP, public IP lookup, IP location, IPv6, ISP, ASN, hostname, VPN detection, network status, DNS leak, port scanner, threat detection, traceroute, WHOIS, speed test">
+    <meta name="description" content="Instantly check your IP, IPv6, ISP, network status, VPN, and location with a sleek map.">
+    <meta name="keywords" content="What is my IP, find IP address, check my IP, public IP lookup, IP location, IPv6, ISP, VPN detection, network status">
     <meta name="author" content="TechFixPro">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph for Social Media -->
-    <meta property="og:title" content="What's My IP? - Ultimate IP & Network Toolkit">
-    <meta property="og:description" content="Explore your IP, network, VPN, DNS, ports, threats, traceroute, WHOIS, speed, and location with a sleek map.">
+    <meta property="og:title" content="What's My IP? - Simple IP Checker">
+    <meta property="og:description" content="Get your IP, IPv6, ISP, network status, VPN, and location with a sleek interactive map.">
     <meta property="og:url" content="https://whatsmyip.techfixpro.net">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://techfixpro.net/icon.png">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="What's My IP? - Ultimate IP & Network Toolkit">
-    <meta name="twitter:description" content="Explore your IP, network, VPN, DNS, ports, threats, traceroute, WHOIS, speed, and location with a sleek map.">
+    <meta name="twitter:title" content="What's My IP? - Simple IP Checker">
+    <meta name="twitter:description" content="Get your IP, IPv6, ISP, network status, VPN, and location with a sleek interactive map.">
     <meta name="twitter:image" content="https://techfixpro.net/icon.png">
     
     <!-- Canonical URL -->
@@ -29,7 +29,7 @@
     <link rel="icon" href="https://techfixpro.net/icon.png" type="image/x-icon">
 
     <!-- Page Title -->
-    <title>What's My IP? - Ultimate IP & Network Toolkit</title>
+    <title>What's My IP? - Simple IP Checker</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -87,7 +87,7 @@
             color: var(--dark-text);
         }
         .container {
-            max-width: 900px;
+            max-width: 800px;
             background: var(--card-bg);
             backdrop-filter: blur(15px);
             padding: 40px;
@@ -182,14 +182,13 @@
         .online { background: var(--success); }
         .offline { background: var(--warning); }
         .vpn-detected { background: #f39c12; }
-        .threat-detected { background: #e74c3c; }
         .buttons {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
             justify-content: center;
         }
-        #copy-btn, #copy-all-btn, #refresh-btn, #export-btn, #port-scan-btn, #traceroute-btn, #whois-btn, #speed-test-btn {
+        #copy-btn, #copy-all-btn, #refresh-btn, #advanced-tools-btn {
             background: var(--primary-color);
             color: white;
             border: none;
@@ -201,11 +200,11 @@
             overflow: hidden;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        #copy-btn:hover:not(:disabled), #copy-all-btn:hover:not(:disabled), #refresh-btn:hover:not(:disabled), #export-btn:hover:not(:disabled), #port-scan-btn:hover:not(:disabled), #traceroute-btn:hover:not(:disabled), #whois-btn:hover:not(:disabled), #speed-test-btn:hover:not(:disabled) {
+        #copy-btn:hover:not(:disabled), #copy-all-btn:hover:not(:disabled), #refresh-btn:hover:not(:disabled), #advanced-tools-btn:hover:not(:disabled) {
             transform: scale(1.05);
             box-shadow: 0 5px 20px rgba(52, 152, 219, 0.5);
         }
-        #copy-btn:disabled, #copy-all-btn:disabled, #refresh-btn:disabled, #export-btn:disabled, #port-scan-btn:disabled, #traceroute-btn:disabled, #whois-btn:disabled, #speed-test-btn:disabled {
+        #copy-btn:disabled, #copy-all-btn:disabled, #refresh-btn:disabled, #advanced-tools-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
         }
@@ -231,54 +230,6 @@
             margin-top: 25px;
             box-shadow: 0 5px 20px var(--shadow);
             animation: mapFadeIn 1s ease-in-out;
-        }
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 300px;
-            height: 100%;
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
-            padding: 20px;
-            box-shadow: 5px 0 15px var(--shadow);
-            transition: left 0.3s ease;
-            overflow-y: auto;
-        }
-        .sidebar.open {
-            left: 0;
-        }
-        .dark .sidebar {
-            background: var(--dark-card);
-        }
-        .sidebar h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #3498db;
-        }
-        .history-item {
-            background: #edf2f7;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        .dark .history-item {
-            background: #2d3748;
-        }
-        .toggle-sidebar {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-color);
-            transition: transform 0.2s ease;
-        }
-        .toggle-sidebar:hover {
-            transform: scale(1.1);
         }
         footer {
             margin-top: 30px;
@@ -326,7 +277,7 @@
             transform: rotate(15deg);
         }
         .dark .mode-toggle {
-            color: #dark-text;
+            color: var(--dark-text);
         }
         @keyframes spin {
             0% { transform: rotate(0deg); opacity: 1; }
@@ -361,7 +312,7 @@
                 flex-direction: column;
                 gap: 10px;
             }
-            #copy-btn, #copy-all-btn, #refresh-btn, #export-btn, #port-scan-btn, #traceroute-btn, #whois-btn, #speed-test-btn {
+            #copy-btn, #copy-all-btn, #refresh-btn, #advanced-tools-btn {
                 padding: 12px 20px;
                 font-size: 15px;
             }
@@ -370,10 +321,6 @@
             }
             .small-text {
                 font-size: 12px;
-            }
-            .sidebar {
-                width: 250px;
-                left: -250px;
             }
             .info-text {
                 width: 150px;
@@ -384,12 +331,7 @@
     </style>
 </head>
 <body>
-    <div class="sidebar" id="history-sidebar">
-        <h2>IP History</h2>
-        <div id="history-list"></div>
-    </div>
     <div class="container">
-        <button class="toggle-sidebar" aria-label="Toggle history sidebar">📜</button>
         <button class="mode-toggle" aria-label="Toggle dark mode">🌙</button>
         <h1>What's My IP?</h1>
         <div class="ip-container">
@@ -410,21 +352,6 @@
                     <div class="info-text">The company providing your internet connection.</div>
                 </div>
                 <div class="info-item">
-                    <span id="asn" class="small-text" data-tooltip="Autonomous System Number"></span>
-                    <button class="info-btn">ℹ️</button>
-                    <div class="info-text">A unique number assigned to an autonomous network system.</div>
-                </div>
-                <div class="info-item">
-                    <span id="hostname" class="small-text" data-tooltip="Device hostname"></span>
-                    <button class="info-btn">ℹ️</button>
-                    <div class="info-text">The name assigned to your device on the network.</div>
-                </div>
-                <div class="info-item">
-                    <span id="coords" class="small-text" data-tooltip="Latitude & Longitude"></span>
-                    <button class="info-btn">ℹ️</button>
-                    <div class="info-text">Geographic coordinates approximating your location.</div>
-                </div>
-                <div class="info-item">
                     <span id="network-status" class="small-text" data-tooltip="Network connectivity"></span>
                     <button class="info-btn">ℹ️</button>
                     <div class="info-text">Indicates if your device is online or offline.</div>
@@ -439,94 +366,39 @@
                     <button class="info-btn">ℹ️</button>
                     <div class="info-text">Checks if your connection is routed through a VPN.</div>
                 </div>
-                <div class="info-item">
-                    <span id="dns-servers" class="small-text" data-tooltip="DNS servers (WebRTC)"></span>
-                    <button class="info-btn">ℹ️</button>
-                    <div class="info-text">Servers translating domain names to IP addresses.</div>
-                </div>
-                <div class="info-item">
-                    <span id="open-ports" class="small-text" data-tooltip="Common open ports"></span>
-                    <button class="info-btn">ℹ️</button>
-                    <div class="info-text">Ports open on your IP, indicating accessible services.</div>
-                </div>
-                <div class="info-item">
-                    <span id="threat-status" class="small-text" data-tooltip="IP blacklist check"></span>
-                    <button class="info-btn">ℹ️</button>
-                    <div class="info-text">Checks if your IP is flagged as malicious.</div>
-                </div>
-                <div class="info-item">
-                    <span id="traceroute" class="small-text" data-tooltip="Network path"></span>
-                    <button class="info-btn">ℹ️</button>
-                    <div class="info-text">Route your data takes to reach a server.</div>
-                </div>
-                <div class="info-item">
-                    <span id="whois" class="small-text" data-tooltip="WHOIS lookup"></span>
-                    <button class="info-btn">ℹ️</button>
-                    <div class="info-text">Registration details for your IP or hostname.</div>
-                </div>
-                <div class="info-item">
-                    <span id="speed-test" class="small-text" data-tooltip="Network speed"></span>
-                    <button class="info-btn">ℹ️</button>
-                    <div class="info-text">Download and upload speeds of your connection.</div>
-                </div>
             </div>
             <div class="buttons">
                 <button id="copy-btn" disabled>Copy IPv4</button>
                 <button id="copy-all-btn" disabled>Copy All</button>
                 <button id="refresh-btn">Refresh</button>
-                <button id="export-btn" disabled>Export</button>
-                <button id="port-scan-btn" disabled>Scan Ports</button>
-                <button id="traceroute-btn" disabled>Traceroute</button>
-                <button id="whois-btn" disabled>WHOIS</button>
-                <button id="speed-test-btn" disabled>Speed Test</button>
+                <button id="advanced-tools-btn"><a href="advanced-tools.html" style="color: white; text-decoration: none;">Advanced Tools</a></button>
             </div>
         </div>
         <span id="copy-feedback" class="small-text"></span>
         <div id="map"></div>
         <footer>
-            <p class="small-text">Your all-in-one toolkit for IP and network analysis.</p>
-            <p class="small-text">No data stored. Powered by ipapi.co, MapLibre, and OpenStreetMap. <a href="https://techfixpro.net/privacy-policy.html">Privacy Policy</a></p>
+            <p class="small-text">Simple IP checker with essential network info.</p>
+            <p class="small-text">No data stored. Powered by ipapi.co and MapLibre. <a href="https://techfixpro.net/privacy">Privacy Policy</a></p>
         </footer>
     </div>
 
     <script>
-        let ipHistory = [];
-        let currentIP = null;
-
         async function fetchIP() {
             try {
                 const response = await fetch("https://ipapi.co/json/");
                 const data = await response.json();
-                currentIP = data.ip;
                 const ipElement = document.getElementById("ip");
                 const ipv6Element = document.getElementById("ipv6");
                 const ispElement = document.getElementById("isp");
-                const asnElement = document.getElementById("asn");
-                const hostnameElement = document.getElementById("hostname");
-                const coordsElement = document.getElementById("coords");
                 const networkStatusElement = document.getElementById("network-status");
                 const latencyElement = document.getElementById("latency");
                 const vpnStatusElement = document.getElementById("vpn-status");
-                const dnsServersElement = document.getElementById("dns-servers");
-                const openPortsElement = document.getElementById("open-ports");
-                const threatStatusElement = document.getElementById("threat-status");
-                const tracerouteElement = document.getElementById("traceroute");
-                const whoisElement = document.getElementById("whois");
-                const speedTestElement = document.getElementById("speed-test");
                 const copyBtn = document.getElementById("copy-btn");
                 const copyAllBtn = document.getElementById("copy-all-btn");
-                const exportBtn = document.getElementById("export-btn");
-                const portScanBtn = document.getElementById("port-scan-btn");
-                const tracerouteBtn = document.getElementById("traceroute-btn");
-                const whoisBtn = document.getElementById("whois-btn");
-                const speedTestBtn = document.getElementById("speed-test-btn");
 
                 ipElement.innerHTML = data.ip || "Not available";
                 ipv6Element.innerHTML = data.ipv6 || "IPv6 not detected";
                 ispElement.innerHTML = data.org || "Unknown ISP";
-                asnElement.innerHTML = data.asn || "Unknown ASN";
-                hostnameElement.innerHTML = data.hostname || "Hostname not available";
-                coordsElement.innerHTML = `${data.latitude}, ${data.longitude}`;
 
                 updateNetworkStatus(networkStatusElement);
 
@@ -540,19 +412,6 @@
                 const isVpnLikely = browserTz !== ipTz || data.vpn || data.proxy;
                 vpnStatusElement.innerHTML = `${isVpnLikely ? 'VPN Detected' : 'No VPN'}<span class="status-badge ${isVpnLikely ? 'vpn-detected' : 'online'}">${isVpnLikely ? 'Likely' : 'Unlikely'}</span>`;
 
-                const dnsServers = await getDNSServers();
-                dnsServersElement.innerHTML = dnsServers.length ? dnsServers.join(", ") : "Not detected";
-
-                const ports = await checkCommonPorts(data.ip);
-                openPortsElement.innerHTML = ports.length ? ports.join(", ") : "None detected";
-
-                const threatLevel = await checkIPThreat(data.ip);
-                threatStatusElement.innerHTML = `${threatLevel}<span class="status-badge ${threatLevel.includes('Threat') ? 'threat-detected' : 'online'}">${threatLevel.includes('Threat') ? 'Risk' : 'Safe'}</span>`;
-
-                tracerouteElement.innerHTML = "Awaiting traceroute...";
-                whoisElement.innerHTML = "Awaiting WHOIS...";
-                speedTestElement.innerHTML = "Awaiting speed test...";
-
                 copyBtn.disabled = false;
                 copyBtn.onclick = (e) => {
                     addRippleEffect(e);
@@ -560,42 +419,12 @@
                     showFeedback("IPv4 Copied!");
                 };
 
-                const allData = `IPv4: ${data.ip || 'N/A'}\nIPv6: ${data.ipv6 || 'N/A'}\nISP: ${data.org || 'N/A'}\nASN: ${data.asn || 'N/A'}\nHostname: ${data.hostname || 'N/A'}\nCoords: ${data.latitude}, ${data.longitude}\nNetwork: ${navigator.onLine ? 'Online' : 'Offline'}\nLatency: ${latency} ms\nVPN: ${isVpnLikely ? 'Yes' : 'No'}\nDNS: ${dnsServers.length ? dnsServers.join(", ") : 'N/A'}\nPorts: ${ports.length ? ports.join(", ") : 'N/A'}\nThreat: ${threatLevel}`;
+                const allData = `IPv4: ${data.ip || 'N/A'}\nIPv6: ${data.ipv6 || 'N/A'}\nISP: ${data.org || 'N/A'}\nNetwork: ${navigator.onLine ? 'Online' : 'Offline'}\nLatency: ${latency} ms\nVPN: ${isVpnLikely ? 'Yes' : 'No'}`;
                 copyAllBtn.disabled = false;
                 copyAllBtn.onclick = (e) => {
                     addRippleEffect(e);
                     navigator.clipboard.writeText(allData);
                     showFeedback("All Data Copied!");
-                };
-
-                exportBtn.disabled = false;
-                exportBtn.onclick = (e) => {
-                    addRippleEffect(e);
-                    exportToJSON(data, { latency, vpn: isVpnLikely, dns: dnsServers, ports, threat: threatLevel });
-                };
-
-                portScanBtn.disabled = false;
-                portScanBtn.onclick = (e) => {
-                    addRippleEffect(e);
-                    runPortScan(data.ip, openPortsElement);
-                };
-
-                tracerouteBtn.disabled = false;
-                tracerouteBtn.onclick = (e) => {
-                    addRippleEffect(e);
-                    runTraceroute(data.ip, tracerouteElement);
-                };
-
-                whoisBtn.disabled = false;
-                whoisBtn.onclick = (e) => {
-                    addRippleEffect(e);
-                    runWhois(data.hostname || data.ip, whoisElement);
-                };
-
-                speedTestBtn.disabled = false;
-                speedTestBtn.onclick = (e) => {
-                    addRippleEffect(e);
-                    runSpeedTest(speedTestElement);
                 };
 
                 const map = new maplibregl.Map({
@@ -622,7 +451,7 @@
                     zoom: 10
                 });
                 map.addControl(new maplibregl.NavigationControl());
-                const marker = new maplibregl.Marker({ color: '#3498db' })
+                new maplibregl.Marker({ color: '#3498db' })
                     .setLngLat([data.longitude, data.latitude])
                     .setPopup(new maplibregl.Popup().setText(`Near ${data.city}, ${data.region}`))
                     .addTo(map)
@@ -649,12 +478,11 @@
                         }
                     });
                 });
-
-                addToHistory(data, { latency, vpn: isVpnLikely, dns: dnsServers, ports, threat: threatLevel });
             } catch (error) {
                 const ipElement = document.getElementById("ip");
                 ipElement.innerHTML = `Error: ${error.message || "Check your connection"}`;
-                disableButtons();
+                document.getElementById("copy-btn").disabled = true;
+                document.getElementById("copy-all-btn").disabled = true;
             }
         }
 
@@ -672,81 +500,6 @@
             element.innerHTML = `${isOnline ? 'Online' : 'Offline'}<span class="status-badge ${isOnline ? 'online' : 'offline'}">${isOnline ? 'Connected' : 'Disconnected'}</span>`;
         }
 
-        async function getDNSServers() {
-            return new Promise(resolve => {
-                const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
-                pc.createDataChannel("");
-                pc.createOffer()
-                    .then(offer => pc.setLocalDescription(offer))
-                    .catch(() => resolve([]));
-                pc.onicecandidate = (ice) => {
-                    if (!ice || !ice.candidate || !ice.candidate.candidate) return;
-                    const servers = ice.candidate.candidate.match(/(?:\d{1,3}\.){3}\d{1,3}/g) || [];
-                    pc.close();
-                    resolve(servers);
-                };
-                setTimeout(() => { pc.close(); resolve([]); }, 1000);
-            });
-        }
-
-        async function checkCommonPorts(ip) {
-            const commonPorts = [80, 443];
-            const results = [];
-            for (const port of commonPorts) {
-                try {
-                    const response = await fetch(`http://localhost:3000/port-scan?ip=${ip}&port=${port}`, { method: 'GET' });
-                    if (response.ok) results.push(port);
-                } catch (_) {}
-            }
-            return results.length ? results : ["Server-side scan required"];
-        }
-
-        async function runPortScan(ip, element) {
-            element.innerHTML = "Scanning...";
-            const ports = await checkCommonPorts(ip);
-            element.innerHTML = ports.length ? ports.join(", ") : "None detected (server-side recommended)";
-        }
-
-        async function runTraceroute(ip, element) {
-            element.innerHTML = "Tracing...";
-            try {
-                const response = await fetch(`http://localhost:3000/traceroute?ip=${ip}`);
-                const data = await response.json();
-                element.innerHTML = data.hops ? data.hops.join(" -> ") : "Server-side traceroute required";
-            } catch {
-                element.innerHTML = "Server-side traceroute required";
-            }
-        }
-
-        async function runWhois(target, element) {
-            element.innerHTML = "Fetching WHOIS...";
-            try {
-                const response = await fetch(`https://api.who.is/whois/${target}`);
-                const data = await response.json();
-                element.innerHTML = data.registrar ? `${data.registrar} (${data.expires})` : "No WHOIS data";
-            } catch {
-                element.innerHTML = "WHOIS unavailable";
-            }
-        }
-
-        async function runSpeedTest(element) {
-            element.innerHTML = "Testing...";
-            try {
-                const response = await fetch("http://localhost:3000/speed-test");
-                const data = await response.json();
-                element.innerHTML = `Down: ${data.download} Mbps, Up: ${data.upload} Mbps`;
-            } catch {
-                const start = performance.now();
-                await fetch("https://ipapi.co/json/", { method: "HEAD" });
-                const latency = Math.round(performance.now() - start);
-                element.innerHTML = `Latency: ${latency} ms (Full test requires server)`;
-            }
-        }
-
-        async function checkIPThreat(ip) {
-            return "No threats detected"; // Placeholder
-        }
-
         function addRippleEffect(event) {
             const btn = event.target;
             const ripple = document.createElement("span");
@@ -760,47 +513,6 @@
             setTimeout(() => ripple.remove(), 600);
         }
 
-        function addToHistory(data, extra) {
-            const timestamp = new Date().toLocaleString();
-            ipHistory.unshift({ ...data, ...extra, timestamp });
-            if (ipHistory.length > 10) ipHistory.pop();
-            updateHistoryUI();
-        }
-
-        function updateHistoryUI() {
-            const historyList = document.getElementById("history-list");
-            historyList.innerHTML = ipHistory.map(item => `
-                <div class="history-item">
-                    <strong>${item.ip || 'N/A'}</strong> (${item.timestamp})<br>
-                    IPv6: ${item.ipv6 || 'N/A'}<br>
-                    ISP: ${item.org || 'N/A'}<br>
-                    Latency: ${item.latency} ms<br>
-                    VPN: ${item.vpn ? 'Yes' : 'No'}
-                </div>
-            `).join("");
-        }
-
-        function exportToJSON(data, extra) {
-            const json = JSON.stringify({ ...data, ...extra, timestamp: new Date().toISOString() }, null, 2);
-            const blob = new Blob([json], { type: "application/json" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `ip-data-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function disableButtons() {
-            document.getElementById("copy-btn").disabled = true;
-            document.getElementById("copy-all-btn").disabled = true;
-            document.getElementById("export-btn").disabled = true;
-            document.getElementById("port-scan-btn").disabled = true;
-            document.getElementById("traceroute-btn").disabled = true;
-            document.getElementById("whois-btn").disabled = true;
-            document.getElementById("speed-test-btn").disabled = true;
-        }
-
         fetchIP();
 
         window.addEventListener('online', () => updateNetworkStatus(document.getElementById("network-status")));
@@ -811,23 +523,10 @@
             document.getElementById("ip").innerHTML = '<span class="spinner"></span>';
             document.getElementById("ipv6").innerHTML = "";
             document.getElementById("isp").innerHTML = "";
-            document.getElementById("asn").innerHTML = "";
-            document.getElementById("hostname").innerHTML = "";
-            document.getElementById("coords").innerHTML = "";
             document.getElementById("network-status").innerHTML = "";
             document.getElementById("latency").innerHTML = "";
             document.getElementById("vpn-status").innerHTML = "";
-            document.getElementById("dns-servers").innerHTML = "";
-            document.getElementById("open-ports").innerHTML = "";
-            document.getElementById("threat-status").innerHTML = "";
-            document.getElementById("traceroute").innerHTML = "";
-            document.getElementById("whois").innerHTML = "";
-            document.getElementById("speed-test").innerHTML = "";
             fetchIP();
-        });
-
-        document.querySelector(".toggle-sidebar").addEventListener("click", () => {
-            document.getElementById("history-sidebar").classList.toggle("open");
         });
 
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
