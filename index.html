@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Standard Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Find your public IP address instantly with one click. View your approximate location on a map. Click to copy your IP easily.">
-    <meta name="keywords" content="What is my IP, find IP address, check my IP, public IP lookup, IP tracker">
+    <meta name="description" content="Find your public IP address instantly with one click. View your approximate location on a map.">
+    <meta name="keywords" content="What is my IP, find IP address, check my IP, public IP lookup">
     <meta name="author" content="TechFixPro">
     <meta name="robots" content="index, follow">
     
-    <!-- Open Graph for Facebook, LinkedIn -->
-    <meta property="og:title" content="What's My IP - Instantly Find Your IP Address">
+    <!-- Open Graph for Social Media -->
+    <meta property="og:title" content="What's My IP? - Instantly Find Your IP Address">
     <meta property="og:description" content="Easily check your public IP address and view your approximate location on a map. Click to copy your IP instantly.">
     <meta property="og:url" content="https://whatsmyip.techfixpro.net">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://techfixpro.net/icon.png">
     
-    <!-- Twitter Card (X) -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="What's My IP - Instantly Find Your IP Address">
+    <meta name="twitter:title" content="What's My IP? - Instantly Find Your IP Address">
     <meta name="twitter:description" content="Easily check your public IP address and view your approximate location on a map. Click to copy your IP instantly.">
     <meta name="twitter:image" content="https://techfixpro.net/icon.png">
     
@@ -27,55 +28,26 @@
     <!-- Favicon -->
     <link rel="icon" href="https://techfixpro.net/icon.png" type="image/x-icon">
 
-    <title>What's My IP - Instantly Find Your IP Address</title>
+    <!-- Page Title -->
+    <title>What's My IP? - Instantly Find Your IP Address</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <!-- Google Ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4778277727361005" crossorigin="anonymous"></script>
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Tag for Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XJTPL90T10"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-XJTPL90T10');
-    </script>
-
-    <!-- Leaflet for Maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-    <!-- Structured Data (Schema.org) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "What's My IP",
-        "description": "Find your public IP address instantly and view your approximate location on a map.",
-        "url": "https://whatsmyip.techfixpro.net",
-        "image": "https://techfixpro.net/icon.png",
-        "author": {
-            "@type": "Organization",
-            "name": "TechFixPro"
-        },
-        "breadcrumb": {
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-                {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://techfixpro.net"
-                },
-                {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "What's My IP",
-                    "item": "https://whatsmyip.techfixpro.net"
-                }
-            ]
-        }
-    }
     </script>
 
     <!-- Custom Styles -->
@@ -93,7 +65,7 @@
             box-sizing: border-box;
         }
         body {
-            font-family: "Arial", sans-serif;
+            font-family: 'Roboto', sans-serif;
             background: var(--background);
             color: var(--text-color);
             display: flex;
@@ -114,95 +86,110 @@
         }
         h1 {
             color: var(--primary-color);
-            font-size: 26px;
+            font-size: 32px;
+            font-weight: 700;
             margin-bottom: 10px;
         }
         .ip-container {
-            font-size: 22px;
-            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: #eee;
             padding: 14px;
             border-radius: 8px;
-            transition: background 0.3s ease;
             margin: 10px auto;
             width: max-content;
-            display: flex;
-            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
         }
-        .ip-container:hover {
-            background: #ddd;
+        #copy-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
-        .checkmark {
-            font-size: 18px;
+        #copy-feedback {
             color: green;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        #map {
+            height: 200px;
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+        footer {
+            margin-top: 20px;
         }
         .small-text {
             font-size: 14px;
             color: #666;
         }
-        #map {
-            height: 300px;
-            width: 100%;
-            border-radius: 10px;
-            margin-top: 15px;
-            animation: fadeInUp 0.6s ease-in-out;
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
         }
-        .ads {
-            margin-top: 20px;
-            min-height: 100px;
-            text-align: center;
+        a:hover {
+            text-decoration: underline;
         }
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #333;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+        /* Spinner Styles */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ddd;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
         }
-        .toast.show {
-            opacity: 1;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .ip-container {
+                font-size: 18px;
+                flex-direction: column;
+                gap: 10px;
+            }
+            #copy-btn {
+                padding: 8px 12px;
+            }
+            #map {
+                height: 150px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>What's My IP?</h1>
-        <p>Your public IP address:</p>
-        <div class="ip-container" id="ip-container">
-            <span id="ip">Loading...</span>
-            <span class="checkmark" id="checkmark">✔</span>
+        <div class="ip-container">
+            <span id="ip"><span class="spinner"></span></span>
+            <button id="copy-btn" disabled>Copy</button>
         </div>
-        <p class="small-text">Click to copy</p>
-
-        <h2>Approximate Location</h2>
-        <div id="map"></div>
-
-        <!-- Educational text -->
-        <p>Your IP address is a unique identifier assigned to your device on the internet. Knowing it can help with troubleshooting network issues or understanding your online presence.</p>
-
-        <!-- Privacy disclaimer -->
+        <span id="copy-feedback" class="small-text">Copied!</span>
+        <div id="map" aria-label="Map showing your approximate location"></div>
         <footer>
-            <p class="small-text">We do not store your IP address or location data. Data is fetched from ipapi.co.</p>
+            <p class="small-text">An IP address is a unique identifier for your device on the internet. Knowing your public IP can help with troubleshooting or understanding your online presence.</p>
+            <p class="small-text">We do not store your IP address or location data. Data is fetched from ipapi.co. <a href="https://techfixpro.net/privacy">Privacy Policy</a></p>
         </footer>
-
-        <!-- Toast message for copy feedback -->
-        <div class="toast" id="toast">IP copied to clipboard!</div>
-
     </div>
 
     <script>
@@ -210,19 +197,23 @@
             try {
                 const response = await fetch("https://ipapi.co/json/");
                 const data = await response.json();
-                document.getElementById("ip").innerText = data.ip;
-                document.getElementById("ip-container").addEventListener("click", () => {
+                const ipElement = document.getElementById("ip");
+                ipElement.innerHTML = data.ip; // Replace spinner with IP
+                const copyBtn = document.getElementById("copy-btn");
+                copyBtn.disabled = false; // Enable copy button
+                copyBtn.addEventListener("click", () => {
                     navigator.clipboard.writeText(data.ip);
-                    const toast = document.getElementById("toast");
-                    toast.classList.add("show");
-                    setTimeout(() => toast.classList.remove("show"), 2000);
+                    const feedback = document.getElementById("copy-feedback");
+                    feedback.style.display = "inline";
+                    setTimeout(() => feedback.style.display = "none", 2000);
                 });
                 const map = L.map('map', { zoomControl: true }).setView([data.latitude, data.longitude], 10);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
                 L.marker([data.latitude, data.longitude]).addTo(map).bindPopup(`You are near ${data.city}, ${data.region}`).openPopup();
             } catch (error) {
-                document.getElementById("ip").innerHTML = "Unable to retrieve IP. <button id='retry'>Retry</button>";
-                document.getElementById("retry").addEventListener("click", getIP);
+                const ipElement = document.getElementById("ip");
+                ipElement.innerHTML = "Unable to retrieve IP";
+                document.getElementById("copy-btn").disabled = true;
             }
         }
         getIP();
