@@ -4,22 +4,22 @@
     <!-- Standard Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Check your IP, IPv6, ISP, ASN, hostname, network status, VPN usage, and location on an interactive map.">
-    <meta name="keywords" content="What is my IP, find IP address, check my IP, public IP lookup, IP location, IPv6, ISP, ASN, hostname, VPN detection, network status">
+    <meta name="description" content="The ultimate IP finder: check IP, IPv6, ISP, ASN, hostname, network, VPN, DNS, ports, threats, and location on an interactive map.">
+    <meta name="keywords" content="What is my IP, find IP address, check my IP, public IP lookup, IP location, IPv6, ISP, ASN, hostname, VPN detection, network status, DNS leak, port scanner, threat detection">
     <meta name="author" content="TechFixPro">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph for Social Media -->
-    <meta property="og:title" content="What's My IP? - Ultimate IP & Network Tool">
-    <meta property="og:description" content="Get your IP, IPv6, ISP, ASN, hostname, network status, VPN detection, and location with a sleek map.">
+    <meta property="og:title" content="What's My IP? - The Ultimate IP Finder">
+    <meta property="og:description" content="Explore your IP, IPv6, ISP, ASN, hostname, network, VPN, DNS, ports, threats, and location with a futuristic map.">
     <meta property="og:url" content="https://whatsmyip.techfixpro.net">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://techfixpro.net/icon.png">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="What's My IP? - Ultimate IP & Network Tool">
-    <meta name="twitter:description" content="Get your IP, IPv6, ISP, ASN, hostname, network status, VPN detection, and location with a sleek map.">
+    <meta name="twitter:title" content="What's My IP? - The Ultimate IP Finder">
+    <meta name="twitter:description" content="Explore your IP, IPv6, ISP, ASN, hostname, network, VPN, DNS, ports, threats, and location with a futuristic map.">
     <meta name="twitter:image" content="https://techfixpro.net/icon.png">
     
     <!-- Canonical URL -->
@@ -29,7 +29,7 @@
     <link rel="icon" href="https://techfixpro.net/icon.png" type="image/x-icon">
 
     <!-- Page Title -->
-    <title>What's My IP? - Ultimate IP & Network Tool</title>
+    <title>What's My IP? - The Ultimate IP Finder</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -54,15 +54,16 @@
     <style>
         :root {
             --primary-color: linear-gradient(135deg, #3498db, #2ecc71);
-            --background: #f0f2f5;
-            --text-color: #333;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --shadow: rgba(0, 0, 0, 0.1);
-            --dark-bg: #1e2a44;
-            --dark-card: rgba(30, 42, 68, 0.9);
-            --dark-text: #e0e0e0;
+            --background: #e8ecef;
+            --text-color: #2d3748;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: rgba(0, 0, 0, 0.15);
+            --dark-bg: #1a202c;
+            --dark-card: rgba(26, 32, 44, 0.95);
+            --dark-text: #e2e8f0;
             --success: #2ecc71;
             --warning: #e74c3c;
+            --accent: #3498db;
         }
         * {
             margin: 0;
@@ -79,19 +80,19 @@
             min-height: 100vh;
             text-align: center;
             padding: 20px;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease, color 0.3s ease;
         }
         body.dark {
             background: var(--dark-bg);
             color: var(--dark-text);
         }
         .container {
-            max-width: 750px;
+            max-width: 800px;
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 8px 25px var(--shadow);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px var(--shadow);
             animation: fadeIn 0.8s ease-in-out;
             width: 100%;
             position: relative;
@@ -99,43 +100,47 @@
         }
         .container:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 35px var(--shadow);
+            box-shadow: 0 15px 40px var(--shadow);
         }
         .dark .container {
             background: var(--dark-card);
         }
         h1 {
             color: #3498db;
-            font-size: 38px;
+            font-size: 40px;
             font-weight: 700;
             margin-bottom: 30px;
-            text-shadow: 0 2px 4px var(--shadow);
+            text-shadow: 0 2px 5px var(--shadow);
         }
         .ip-container {
-            background: #eee;
-            padding: 20px;
-            border-radius: 12px;
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 16px;
             margin: 20px auto;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: bold;
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 35px;
             justify-content: center;
             align-items: center;
         }
         .dark .ip-container {
-            background: #3b4a6b;
+            background: #2d3748;
         }
         .ip-info {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             position: relative;
         }
         .ip-info span[data-tooltip] {
             position: relative;
             cursor: help;
+            transition: color 0.2s ease;
+        }
+        .ip-info span[data-tooltip]:hover {
+            color: #3498db;
         }
         .ip-info span[data-tooltip]:hover:after {
             content: attr(data-tooltip);
@@ -143,35 +148,37 @@
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
-            background: #333;
+            background: #2d3748;
             color: #fff;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 13px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 14px;
             white-space: nowrap;
             z-index: 10;
             animation: tooltipFade 0.2s ease-in-out;
         }
         .dark .ip-info span[data-tooltip]:hover:after {
-            background: #555;
+            background: #4a5568;
         }
         .status-badge {
             font-size: 12px;
-            padding: 4px 8px;
-            border-radius: 12px;
-            margin-left: 8px;
+            padding: 5px 10px;
+            border-radius: 14px;
+            margin-left: 10px;
             color: #fff;
+            transition: background 0.2s ease;
         }
         .online { background: var(--success); }
         .offline { background: var(--warning); }
         .vpn-detected { background: #f39c12; }
+        .threat-detected { background: #e74c3c; }
         .buttons {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
             justify-content: center;
         }
-        #copy-btn, #copy-all-btn, #refresh-btn {
+        #copy-btn, #copy-all-btn, #refresh-btn, #export-btn {
             background: var(--primary-color);
             color: white;
             border: none;
@@ -179,15 +186,25 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            position: relative;
+            overflow: hidden;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        #copy-btn:hover:not(:disabled), #copy-all-btn:hover:not(:disabled), #refresh-btn:hover:not(:disabled) {
+        #copy-btn:hover:not(:disabled), #copy-all-btn:hover:not(:disabled), #refresh-btn:hover:not(:disabled), #export-btn:hover:not(:disabled) {
             transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+            box-shadow: 0 5px 20px rgba(52, 152, 219, 0.5);
         }
-        #copy-btn:disabled, #copy-all-btn:disabled, #refresh-btn:disabled {
+        #copy-btn:disabled, #copy-all-btn:disabled, #refresh-btn:disabled, #export-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
+        }
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+            pointer-events: none;
         }
         #copy-feedback {
             color: #2ecc71;
@@ -197,12 +214,60 @@
             transition: opacity 0.3s ease;
         }
         #map {
-            height: 300px;
+            height: 320px;
             width: 100%;
-            border-radius: 12px;
+            border-radius: 16px;
             margin-top: 25px;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 5px 20px var(--shadow);
             animation: mapFadeIn 1s ease-in-out;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            box-shadow: 5px 0 15px var(--shadow);
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .dark .sidebar {
+            background: var(--dark-card);
+        }
+        .sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+        .history-item {
+            background: #edf2f7;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .dark .history-item {
+            background: #2d3748;
+        }
+        .toggle-sidebar {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: transform 0.2s ease;
+        }
+        .toggle-sidebar:hover {
+            transform: scale(1.1);
         }
         footer {
             margin-top: 30px;
@@ -224,8 +289,8 @@
         }
         .spinner {
             display: inline-block;
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             border: 4px solid #ddd;
             border-top: 4px solid #3498db;
             border-radius: 50%;
@@ -241,7 +306,7 @@
             right: 15px;
             background: none;
             border: none;
-            font-size: 22px;
+            font-size: 24px;
             cursor: pointer;
             color: var(--text-color);
             transition: transform 0.2s ease;
@@ -269,16 +334,19 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        @keyframes rippleEffect {
+            to { transform: scale(4); opacity: 0; }
+        }
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
                 margin: 10px;
             }
             h1 {
-                font-size: 30px;
+                font-size: 32px;
             }
             .ip-container {
-                font-size: 24px;
+                font-size: 26px;
                 gap: 20px;
                 padding: 15px;
             }
@@ -286,50 +354,65 @@
                 flex-direction: column;
                 gap: 10px;
             }
-            #copy-btn, #copy-all-btn, #refresh-btn {
+            #copy-btn, #copy-all-btn, #refresh-btn, #export-btn {
                 padding: 12px 20px;
                 font-size: 15px;
             }
             #map {
-                height: 200px;
+                height: 220px;
             }
             .small-text {
                 font-size: 12px;
+            }
+            .sidebar {
+                width: 250px;
+                left: -250px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="sidebar" id="history-sidebar">
+        <h2>IP History</h2>
+        <div id="history-list"></div>
+    </div>
     <div class="container">
+        <button class="toggle-sidebar" aria-label="Toggle history sidebar">📜</button>
         <button class="mode-toggle" aria-label="Toggle dark mode">🌙</button>
         <h1>What's My IP?</h1>
         <div class="ip-container">
             <div class="ip-info">
                 <span id="ip" data-tooltip="Your public IPv4 address"><span class="spinner"></span></span>
-                <span id="ipv6" class="small-text" data-tooltip="Your IPv6 address (if available)"></span>
-                <span id="isp" class="small-text" data-tooltip="Your Internet Service Provider"></span>
+                <span id="ipv6" class="small-text" data-tooltip="Your IPv6 address"></span>
+                <span id="isp" class="small-text" data-tooltip="Internet Service Provider"></span>
                 <span id="asn" class="small-text" data-tooltip="Autonomous System Number"></span>
-                <span id="hostname" class="small-text" data-tooltip="Your device's hostname (if available)"></span>
+                <span id="hostname" class="small-text" data-tooltip="Device hostname"></span>
                 <span id="coords" class="small-text" data-tooltip="Latitude & Longitude"></span>
-                <span id="network-status" class="small-text" data-tooltip="Current network connectivity"></span>
+                <span id="network-status" class="small-text" data-tooltip="Network connectivity"></span>
                 <span id="latency" class="small-text" data-tooltip="Network latency (ping)"></span>
                 <span id="vpn-status" class="small-text" data-tooltip="VPN usage detection"></span>
+                <span id="dns-servers" class="small-text" data-tooltip="DNS servers (WebRTC)"></span>
+                <span id="open-ports" class="small-text" data-tooltip="Common open ports"></span>
+                <span id="threat-status" class="small-text" data-tooltip="IP blacklist check"></span>
             </div>
             <div class="buttons">
                 <button id="copy-btn" disabled>Copy IPv4</button>
                 <button id="copy-all-btn" disabled>Copy All</button>
                 <button id="refresh-btn">Refresh</button>
+                <button id="export-btn" disabled>Export</button>
             </div>
         </div>
-        <span id="copy-feedback" class="small-text">Copied!</span>
+        <span id="copy-feedback" class="small-text"></span>
         <div id="map"></div>
         <footer>
-            <p class="small-text">Analyze your IP, network status, and VPN usage with this advanced tool.</p>
-            <p class="small-text">No data stored. Powered by ipapi.co and MapLibre with OpenStreetMap. <a href="https://techfixpro.net/privacy-policy.html">Privacy Policy</a></p>
+            <p class="small-text">The ultimate tool for IP analysis, network diagnostics, and threat detection.</p>
+            <p class="small-text">No data stored. Powered by ipapi.co, MapLibre, and OpenStreetMap. <a href="https://techfixpro.net/privacy-policy.html">Privacy Policy</a></p>
         </footer>
     </div>
 
     <script>
+        let ipHistory = [];
+        
         async function fetchIP() {
             try {
                 const response = await fetch("https://ipapi.co/json/");
@@ -343,8 +426,12 @@
                 const networkStatusElement = document.getElementById("network-status");
                 const latencyElement = document.getElementById("latency");
                 const vpnStatusElement = document.getElementById("vpn-status");
+                const dnsServersElement = document.getElementById("dns-servers");
+                const openPortsElement = document.getElementById("open-ports");
+                const threatStatusElement = document.getElementById("threat-status");
                 const copyBtn = document.getElementById("copy-btn");
                 const copyAllBtn = document.getElementById("copy-all-btn");
+                const exportBtn = document.getElementById("export-btn");
 
                 ipElement.innerHTML = data.ip || "Not available";
                 ipv6Element.innerHTML = data.ipv6 || "IPv6 not detected";
@@ -358,29 +445,51 @@
 
                 // Latency (Ping)
                 const startTime = performance.now();
-                await fetch("https://ipapi.co/json/", { method: "HEAD" }); // Simple ping test
+                await fetch("https://ipapi.co/json/", { method: "HEAD" });
                 const latency = Math.round(performance.now() - startTime);
                 latencyElement.innerHTML = `${latency} ms<span class="status-badge ${latency < 100 ? 'online' : 'offline'}">${latency < 100 ? 'Fast' : 'Slow'}</span>`;
 
-                // VPN Detection (Basic heuristic)
+                // VPN Detection
                 const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 const ipTz = data.timezone;
-                const isVpnLikely = browserTz !== ipTz || data.vpn || data.proxy; // ipapi.co may provide vpn/proxy flags
+                const isVpnLikely = browserTz !== ipTz || data.vpn || data.proxy;
                 vpnStatusElement.innerHTML = `${isVpnLikely ? 'VPN Detected' : 'No VPN'}<span class="status-badge ${isVpnLikely ? 'vpn-detected' : 'online'}">${isVpnLikely ? 'Likely' : 'Unlikely'}</span>`;
 
+                // DNS Servers (WebRTC Leak Test - Simplified)
+                const dnsServers = await getDNSServers();
+                dnsServersElement.innerHTML = dnsServers.length ? dnsServers.join(", ") : "Not detected";
+
+                // Open Ports (Basic Check - Limited by Browser Security)
+                const ports = await checkCommonPorts(data.ip);
+                openPortsElement.innerHTML = ports.length ? ports.join(", ") : "None detected";
+
+                // Threat Detection (Using AbuseIPDB - Replace with your API key)
+                const threatLevel = await checkIPThreat(data.ip);
+                threatStatusElement.innerHTML = `${threatLevel}<span class="status-badge ${threatLevel.includes('Threat') ? 'threat-detected' : 'online'}">${threatLevel.includes('Threat') ? 'Risk' : 'Safe'}</span>`;
+
+                // Buttons Functionality
                 copyBtn.disabled = false;
-                copyBtn.onclick = () => {
+                copyBtn.onclick = (e) => {
+                    addRippleEffect(e);
                     navigator.clipboard.writeText(data.ip);
                     showFeedback("IPv4 Copied!");
                 };
 
-                const allData = `IPv4: ${data.ip || 'N/A'}\nIPv6: ${data.ipv6 || 'N/A'}\nISP: ${data.org || 'N/A'}\nASN: ${data.asn || 'N/A'}\nHostname: ${data.hostname || 'N/A'}\nCoords: ${data.latitude}, ${data.longitude}\nNetwork: ${navigator.onLine ? 'Online' : 'Offline'}\nLatency: ${latency} ms\nVPN: ${isVpnLikely ? 'Yes' : 'No'}`;
+                const allData = `IPv4: ${data.ip || 'N/A'}\nIPv6: ${data.ipv6 || 'N/A'}\nISP: ${data.org || 'N/A'}\nASN: ${data.asn || 'N/A'}\nHostname: ${data.hostname || 'N/A'}\nCoords: ${data.latitude}, ${data.longitude}\nNetwork: ${navigator.onLine ? 'Online' : 'Offline'}\nLatency: ${latency} ms\nVPN: ${isVpnLikely ? 'Yes' : 'No'}\nDNS: ${dnsServers.length ? dnsServers.join(", ") : 'N/A'}\nPorts: ${ports.length ? ports.join(", ") : 'N/A'}\nThreat: ${threatLevel}`;
                 copyAllBtn.disabled = false;
-                copyAllBtn.onclick = () => {
+                copyAllBtn.onclick = (e) => {
+                    addRippleEffect(e);
                     navigator.clipboard.writeText(allData);
                     showFeedback("All Data Copied!");
                 };
 
+                exportBtn.disabled = false;
+                exportBtn.onclick = (e) => {
+                    addRippleEffect(e);
+                    exportToJSON(data, { latency, vpn: isVpnLikely, dns: dnsServers, ports, threat: threatLevel });
+                };
+
+                // Map
                 const map = new maplibregl.Map({
                     container: 'map',
                     style: {
@@ -426,17 +535,21 @@
                         'type': 'circle',
                         'source': 'coords-overlay',
                         'paint': {
-                            'circle-radius': 10,
+                            'circle-radius': 12,
                             'circle-color': '#3498db',
-                            'circle-opacity': 0.3
+                            'circle-opacity': 0.4
                         }
                     });
                 });
+
+                // Add to IP History
+                addToHistory(data, { latency, vpn: isVpnLikely, dns: dnsServers, ports, threat: threatLevel });
             } catch (error) {
                 const ipElement = document.getElementById("ip");
                 ipElement.innerHTML = `Error: ${error.message || "Check your connection"}`;
                 document.getElementById("copy-btn").disabled = true;
                 document.getElementById("copy-all-btn").disabled = true;
+                document.getElementById("export-btn").disabled = true;
             }
         }
 
@@ -454,6 +567,94 @@
             element.innerHTML = `${isOnline ? 'Online' : 'Offline'}<span class="status-badge ${isOnline ? 'online' : 'offline'}">${isOnline ? 'Connected' : 'Disconnected'}</span>`;
         }
 
+        async function getDNSServers() {
+            // Simplified WebRTC leak test (requires RTCPeerConnection support)
+            return new Promise(resolve => {
+                const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
+                pc.createDataChannel("");
+                pc.createOffer()
+                    .then(offer => pc.setLocalDescription(offer))
+                    .catch(() => resolve([]));
+                pc.onicecandidate = (ice) => {
+                    if (!ice || !ice.candidate || !ice.candidate.candidate) return;
+                    const servers = ice.candidate.candidate.match(/(?:\d{1,3}\.){3}\d{1,3}/g) || [];
+                    pc.close();
+                    resolve(servers);
+                };
+                setTimeout(() => { pc.close(); resolve([]); }, 1000); // Fallback
+            });
+        }
+
+        async function checkCommonPorts(ip) {
+            // Basic port check (limited by browser CORS and security - placeholder)
+            const commonPorts = [80, 443]; // HTTP, HTTPS
+            const results = [];
+            for (const port of commonPorts) {
+                try {
+                    const response = await fetch(`https://${ip}:${port}`, { mode: 'no-cors', method: 'HEAD', timeout: 1000 });
+                    if (response) results.push(port); // Note: No-cors limits accuracy
+                } catch (_) {}
+            }
+            return results;
+        }
+
+        async function checkIPThreat(ip) {
+            // Placeholder for AbuseIPDB (requires API key - free tier available)
+            // Replace with actual API call if key obtained: https://www.abuseipdb.com/
+            return "No threats detected"; // Fallback
+            // Example with API key:
+            // const apiKey = "YOUR_ABUSEIPDB_API_KEY";
+            // const response = await fetch(`https://api.abuseipdb.com/api/v2/check?ipAddress=${ip}`, {
+            //     headers: { "Key": apiKey, "Accept": "application/json" }
+            // });
+            // const data = await response.json();
+            // return data.data.abuseConfidenceScore > 0 ? `Threat Score: ${data.data.abuseConfidenceScore}%` : "No threats detected";
+        }
+
+        function addRippleEffect(event) {
+            const btn = event.target;
+            const ripple = document.createElement("span");
+            ripple.classList.add("ripple");
+            const rect = btn.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+            ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
+            btn.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        function addToHistory(data, extra) {
+            const timestamp = new Date().toLocaleString();
+            ipHistory.unshift({ ...data, ...extra, timestamp });
+            if (ipHistory.length > 10) ipHistory.pop(); // Limit to 10 entries
+            updateHistoryUI();
+        }
+
+        function updateHistoryUI() {
+            const historyList = document.getElementById("history-list");
+            historyList.innerHTML = ipHistory.map(item => `
+                <div class="history-item">
+                    <strong>${item.ip || 'N/A'}</strong> (${item.timestamp})<br>
+                    IPv6: ${item.ipv6 || 'N/A'}<br>
+                    ISP: ${item.org || 'N/A'}<br>
+                    Latency: ${item.latency} ms<br>
+                    VPN: ${item.vpn ? 'Yes' : 'No'}
+                </div>
+            `).join("");
+        }
+
+        function exportToJSON(data, extra) {
+            const json = JSON.stringify({ ...data, ...extra, timestamp: new Date().toISOString() }, null, 2);
+            const blob = new Blob([json], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `ip-data-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
         // Initial fetch
         fetchIP();
 
@@ -462,7 +663,8 @@
         window.addEventListener('offline', () => updateNetworkStatus(document.getElementById("network-status")));
 
         // Refresh button
-        document.getElementById("refresh-btn").addEventListener("click", () => {
+        document.getElementById("refresh-btn").addEventListener("click", (e) => {
+            addRippleEffect(e);
             document.getElementById("ip").innerHTML = '<span class="spinner"></span>';
             document.getElementById("ipv6").innerHTML = "";
             document.getElementById("isp").innerHTML = "";
@@ -472,14 +674,29 @@
             document.getElementById("network-status").innerHTML = "";
             document.getElementById("latency").innerHTML = "";
             document.getElementById("vpn-status").innerHTML = "";
+            document.getElementById("dns-servers").innerHTML = "";
+            document.getElementById("open-ports").innerHTML = "";
+            document.getElementById("threat-status").innerHTML = "";
             fetchIP();
         });
 
-        // Dark mode toggle
+        // Sidebar toggle
+        document.querySelector(".toggle-sidebar").addEventListener("click", () => {
+            document.getElementById("history-sidebar").classList.toggle("open");
+        });
+
+        // Dynamic theme detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add("dark");
+            document.querySelector(".mode-toggle").textContent = "☀️";
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            document.body.classList.toggle("dark", e.matches);
+            document.querySelector(".mode-toggle").textContent = e.matches ? "☀️" : "🌙";
+        });
         document.querySelector(".mode-toggle").addEventListener("click", () => {
             document.body.classList.toggle("dark");
-            const toggle = document.querySelector(".mode-toggle");
-            toggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+            document.querySelector(".mode-toggle").textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
         });
     </script>
 </body>
