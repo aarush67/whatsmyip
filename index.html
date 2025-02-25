@@ -4,14 +4,14 @@
     <!-- Standard Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content=" Instantly check your public IP, IPv6, ISP, ASN, hostname, and location on an interactive map.">
-    <meta name="keywords" content="What is my IP, find IP address, check my IP, public IP lookup, IP location, IPv6, ISP, ASN, hostname">
+    <meta name="description" content="Check your IP, IPv6, ISP, ASN, hostname, network status, VPN usage, and location on an interactive map.">
+    <meta name="keywords" content="What is my IP, find IP address, check my IP, public IP lookup, IP location, IPv6, ISP, ASN, hostname, VPN detection, network status">
     <meta name="author" content="TechFixPro">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph for Social Media -->
     <meta property="og:title" content="What's My IP? - Ultimate IP & Network Tool">
-    <meta property="og:description" content="Get your IP, IPv6, ISP, ASN, hostname, and location with a sleek, interactive map.">
+    <meta property="og:description" content="Get your IP, IPv6, ISP, ASN, hostname, network status, VPN detection, and location with a sleek map.">
     <meta property="og:url" content="https://whatsmyip.techfixpro.net">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://techfixpro.net/icon.png">
@@ -19,7 +19,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="What's My IP? - Ultimate IP & Network Tool">
-    <meta name="twitter:description" content="Get your IP, IPv6, ISP, ASN, hostname, and location with a sleek, interactive map.">
+    <meta name="twitter:description" content="Get your IP, IPv6, ISP, ASN, hostname, network status, VPN detection, and location with a sleek map.">
     <meta name="twitter:image" content="https://techfixpro.net/icon.png">
     
     <!-- Canonical URL -->
@@ -61,6 +61,8 @@
             --dark-bg: #1e2a44;
             --dark-card: rgba(30, 42, 68, 0.9);
             --dark-text: #e0e0e0;
+            --success: #2ecc71;
+            --warning: #e74c3c;
         }
         * {
             margin: 0;
@@ -153,9 +155,21 @@
         .dark .ip-info span[data-tooltip]:hover:after {
             background: #555;
         }
+        .status-badge {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+            color: #fff;
+        }
+        .online { background: var(--success); }
+        .offline { background: var(--warning); }
+        .vpn-detected { background: #f39c12; }
         .buttons {
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         #copy-btn, #copy-all-btn, #refresh-btn {
             background: var(--primary-color);
@@ -297,6 +311,9 @@
                 <span id="asn" class="small-text" data-tooltip="Autonomous System Number"></span>
                 <span id="hostname" class="small-text" data-tooltip="Your device's hostname (if available)"></span>
                 <span id="coords" class="small-text" data-tooltip="Latitude & Longitude"></span>
+                <span id="network-status" class="small-text" data-tooltip="Current network connectivity"></span>
+                <span id="latency" class="small-text" data-tooltip="Network latency (ping)"></span>
+                <span id="vpn-status" class="small-text" data-tooltip="VPN usage detection"></span>
             </div>
             <div class="buttons">
                 <button id="copy-btn" disabled>Copy IPv4</button>
@@ -307,7 +324,7 @@
         <span id="copy-feedback" class="small-text">Copied!</span>
         <div id="map"></div>
         <footer>
-            <p class="small-text">Your IP address reveals your online identity. Use this tool to diagnose networks or explore connectivity details.</p>
+            <p class="small-text">Analyze your IP, network status, and VPN usage with this advanced tool.</p>
             <p class="small-text">No data stored. Powered by ipapi.co and MapLibre with OpenStreetMap. <a href="https://techfixpro.net/privacy-policy.html">Privacy Policy</a></p>
         </footer>
     </div>
@@ -323,6 +340,9 @@
                 const asnElement = document.getElementById("asn");
                 const hostnameElement = document.getElementById("hostname");
                 const coordsElement = document.getElementById("coords");
+                const networkStatusElement = document.getElementById("network-status");
+                const latencyElement = document.getElementById("latency");
+                const vpnStatusElement = document.getElementById("vpn-status");
                 const copyBtn = document.getElementById("copy-btn");
                 const copyAllBtn = document.getElementById("copy-all-btn");
 
@@ -333,13 +353,28 @@
                 hostnameElement.innerHTML = data.hostname || "Hostname not available";
                 coordsElement.innerHTML = `${data.latitude}, ${data.longitude}`;
 
+                // Network Status
+                updateNetworkStatus(networkStatusElement);
+
+                // Latency (Ping)
+                const startTime = performance.now();
+                await fetch("https://ipapi.co/json/", { method: "HEAD" }); // Simple ping test
+                const latency = Math.round(performance.now() - startTime);
+                latencyElement.innerHTML = `${latency} ms<span class="status-badge ${latency < 100 ? 'online' : 'offline'}">${latency < 100 ? 'Fast' : 'Slow'}</span>`;
+
+                // VPN Detection (Basic heuristic)
+                const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const ipTz = data.timezone;
+                const isVpnLikely = browserTz !== ipTz || data.vpn || data.proxy; // ipapi.co may provide vpn/proxy flags
+                vpnStatusElement.innerHTML = `${isVpnLikely ? 'VPN Detected' : 'No VPN'}<span class="status-badge ${isVpnLikely ? 'vpn-detected' : 'online'}">${isVpnLikely ? 'Likely' : 'Unlikely'}</span>`;
+
                 copyBtn.disabled = false;
                 copyBtn.onclick = () => {
                     navigator.clipboard.writeText(data.ip);
                     showFeedback("IPv4 Copied!");
                 };
 
-                const allData = `IPv4: ${data.ip || 'N/A'}\nIPv6: ${data.ipv6 || 'N/A'}\nISP: ${data.org || 'N/A'}\nASN: ${data.asn || 'N/A'}\nHostname: ${data.hostname || 'N/A'}\nCoords: ${data.latitude}, ${data.longitude}`;
+                const allData = `IPv4: ${data.ip || 'N/A'}\nIPv6: ${data.ipv6 || 'N/A'}\nISP: ${data.org || 'N/A'}\nASN: ${data.asn || 'N/A'}\nHostname: ${data.hostname || 'N/A'}\nCoords: ${data.latitude}, ${data.longitude}\nNetwork: ${navigator.onLine ? 'Online' : 'Offline'}\nLatency: ${latency} ms\nVPN: ${isVpnLikely ? 'Yes' : 'No'}`;
                 copyAllBtn.disabled = false;
                 copyAllBtn.onclick = () => {
                     navigator.clipboard.writeText(allData);
@@ -414,8 +449,19 @@
             setTimeout(() => feedback.style.display = "none", 1800);
         }
 
+        function updateNetworkStatus(element) {
+            const isOnline = navigator.onLine;
+            element.innerHTML = `${isOnline ? 'Online' : 'Offline'}<span class="status-badge ${isOnline ? 'online' : 'offline'}">${isOnline ? 'Connected' : 'Disconnected'}</span>`;
+        }
+
+        // Initial fetch
         fetchIP();
 
+        // Real-time network status updates
+        window.addEventListener('online', () => updateNetworkStatus(document.getElementById("network-status")));
+        window.addEventListener('offline', () => updateNetworkStatus(document.getElementById("network-status")));
+
+        // Refresh button
         document.getElementById("refresh-btn").addEventListener("click", () => {
             document.getElementById("ip").innerHTML = '<span class="spinner"></span>';
             document.getElementById("ipv6").innerHTML = "";
@@ -423,9 +469,13 @@
             document.getElementById("asn").innerHTML = "";
             document.getElementById("hostname").innerHTML = "";
             document.getElementById("coords").innerHTML = "";
+            document.getElementById("network-status").innerHTML = "";
+            document.getElementById("latency").innerHTML = "";
+            document.getElementById("vpn-status").innerHTML = "";
             fetchIP();
         });
 
+        // Dark mode toggle
         document.querySelector(".mode-toggle").addEventListener("click", () => {
             document.body.classList.toggle("dark");
             const toggle = document.querySelector(".mode-toggle");
