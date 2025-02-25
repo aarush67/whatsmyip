@@ -33,14 +33,13 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4778277727361005" crossorigin="anonymous"></script>
 
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XJTPL90T10"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-XJTPL90T10');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XJTPL90T10"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XJTPL90T10');
+    </script>
 
     <!-- Leaflet for Maps -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
@@ -124,7 +123,6 @@
             background: #eee;
             padding: 14px;
             border-radius: 8px;
-            cursor: pointer;
             transition: background 0.3s ease;
             margin: 10px auto;
             width: max-content;
@@ -156,6 +154,21 @@
             min-height: 100px;
             text-align: center;
         }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .toast.show {
+            opacity: 1;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -179,6 +192,29 @@
         <h2>Approximate Location</h2>
         <div id="map"></div>
 
+        <!-- Educational text -->
+        <p>Your IP address is a unique identifier assigned to your device on the internet. Knowing it can help with troubleshooting network issues or understanding your online presence.</p>
+
+        <!-- Privacy disclaimer -->
+        <footer>
+            <p class="small-text">We do not store your IP address or location data. Data is fetched from ipapi.co.</p>
+        </footer>
+
+        <!-- Toast message for copy feedback -->
+        <div class="toast" id="toast">IP copied to clipboard!</div>
+
+        <!-- Google Ads -->
+        <div class="ads">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4778277727361005"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
 
     <script>
         async function getIP() {
@@ -188,14 +224,16 @@
                 document.getElementById("ip").innerText = data.ip;
                 document.getElementById("ip-container").addEventListener("click", () => {
                     navigator.clipboard.writeText(data.ip);
-                    document.getElementById("checkmark").style.opacity = "1";
-                    setTimeout(() => document.getElementById("checkmark").style.opacity = "0", 1500);
+                    const toast = document.getElementById("toast");
+                    toast.classList.add("show");
+                    setTimeout(() => toast.classList.remove("show"), 2000);
                 });
-                const map = L.map('map').setView([data.latitude, data.longitude], 10);
+                const map = L.map('map', { zoomControl: true }).setView([data.latitude, data.longitude], 10);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
                 L.marker([data.latitude, data.longitude]).addTo(map).bindPopup(`You are near ${data.city}, ${data.region}`).openPopup();
             } catch (error) {
-                document.getElementById("ip").innerText = "Unable to retrieve IP";
+                document.getElementById("ip").innerHTML = "Unable to retrieve IP. <button id='retry'>Retry</button>";
+                document.getElementById("retry").addEventListener("click", getIP);
             }
         }
         getIP();
